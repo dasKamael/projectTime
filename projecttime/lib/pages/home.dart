@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:projecttime/timeCard.dart';
+import 'package:projecttime/classes/task.dart';
+import 'package:projecttime/widgets/taskCard.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -7,8 +8,53 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<TaskCard> tasks = [
+    TaskCard(taskName: 'taskname', color: Colors.blue, time: 100, days: {
+      'M': false,
+      'T': true,
+      'W': false,
+      'T': true,
+      'F': false,
+      'S': false,
+      'S': false,
+    }),
+    TaskCard(taskName: 'Bob', color: Colors.red, time: 100, days: {
+      'M': true,
+      'T': true,
+      'W': false,
+      'T': true,
+      'F': true,
+      'S': false,
+      'S': false,
+    }),
+    TaskCard(taskName: 'taskname', color: Colors.orange, time: 100, days: {
+      'M': false,
+      'T': true,
+      'W': false,
+      'T': true,
+      'F': false,
+      'S': false,
+      'S': false,
+    }),
+    TaskCard(taskName: 'taskname', color: Colors.yellow, time: 100, days: {
+      'M': false,
+      'T': true,
+      'W': false,
+      'T': true,
+      'F': false,
+      'S': false,
+      'S': false,
+    }),
+  ];
+
+  Map taskData = {};
+
   @override
   Widget build(BuildContext context) {
+    taskData = taskData.length < 1
+        ? taskData
+        : ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -24,7 +70,7 @@ class _HomeState extends State<Home> {
               child: Container(
                   child: Center(
                 child: Text(
-                  '14:22',
+                  '00:00',
                   style: TextStyle(
                       fontSize: 50.0,
                       fontWeight: FontWeight.bold,
@@ -43,9 +89,9 @@ class _HomeState extends State<Home> {
                       topRight: Radius.circular(40)),
                 ),
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: tasks.length,
                   itemBuilder: (context, index) {
-                    return TimeCard();
+                    return tasks[index];
                   },
                 ),
               ),
@@ -53,19 +99,22 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.add,
-            ),
-            title: Text('Add new...'),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          dynamic result = await Navigator.pushNamed(context, '/addTask');
+          print(result);
+          setState(() {
+            tasks.add(
+              TaskCard(
+                taskName: result['taskName'],
+                color: result['color'],
+                time: 100,
+                days: result['days'],
+              ),
+            );
+          });
+        },
+        child: Icon(Icons.add),
       ),
     );
   }

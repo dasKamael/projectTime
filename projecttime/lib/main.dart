@@ -4,7 +4,7 @@ import 'package:projecttime/pages/home.dart';
 
 
 void main() => runApp(MaterialApp(
-  initialRoute: '/addTask',
+  initialRoute: '/',
   routes: {
     '/': (context) => Home(),
     '/addTask': (context) => AddTask()

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projecttime/timeCard.dart';
+import 'package:projecttime/widgets/taskCard.dart';
 
 class AddTask extends StatefulWidget {
   @override
@@ -7,6 +7,19 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
+  String taskName;
+  Color color;
+  Map<String, bool> days = {
+    'M': false,
+    'T': false,
+    'W': false,
+    'T': false,
+    'F': false,
+    'S': false,
+    'S': false,
+  };
+  List<bool> daysSelected = [false,false,false,false,false,false,false,];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +35,9 @@ class _AddTaskState extends State<AddTask> {
               width: 350.0,
               child: Center(
                 child: TextField(
+                  onChanged: (String str) {
+                    taskName = str;
+                  },
                   textAlign: TextAlign.center,
                   cursorColor: Colors.white,
                   cursorWidth: 2.0,
@@ -55,14 +71,22 @@ class _AddTaskState extends State<AddTask> {
                 children: <Widget>[
                   Text('Repeat', style: TextStyle(fontSize: 30.0)),
                   SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  ToggleButtons(
                     children: <Widget>[
-                      Text(
-                        'M D M D F S S',
-                        style: TextStyle(fontSize: 22, letterSpacing: 10.0),
-                      ),
+                      Text('M'),
+                      Text('T'),
+                      Text('W'),
+                      Text('T'),
+                      Text('F'),
+                      Text('S'),
+                      Text('S'),
                     ],
+                    onPressed: (int index) {
+                      setState(() {
+                        daysSelected[index] = !daysSelected[index];
+                      });
+                    },
+                    isSelected: daysSelected,
                   ),
                   SizedBox(height: 40.0),
                   Text('Color', style: TextStyle(fontSize: 30.0)),
@@ -86,17 +110,23 @@ class _AddTaskState extends State<AddTask> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.delete_forever),
-            title: Text('Delete Task'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add, ),
-            title: Text('Add new Task'),
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          days['M'] = daysSelected[0];
+          days['T'] = daysSelected[1];
+          days['W'] = daysSelected[2];
+          days['T'] = daysSelected[3];
+          days['F'] = daysSelected[4];
+          days['S'] = daysSelected[5];
+          days['S'] = daysSelected[6];
+
+          Navigator.pop(context, {
+            'taskName': taskName,
+            'color': Colors.blue,
+            'days': days,
+          });
+        },
       ),
     );
   }
