@@ -7,8 +7,10 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
-  String taskName;
-  Color color;
+  String taskName = 'Not given';
+  Color color = Colors.blue;
+
+  List<bool> daysSelected = [false, false, false, false, false, false, false];
   Map<String, bool> days = {
     'M': false,
     'T': false,
@@ -18,7 +20,8 @@ class _AddTaskState extends State<AddTask> {
     'S': false,
     'S': false,
   };
-  List<bool> daysSelected = [false,false,false,false,false,false,false,];
+
+  int groupValue = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -94,14 +97,74 @@ class _AddTaskState extends State<AddTask> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      Icon(Icons.album, color: Colors.blue),
-                      Icon(Icons.album, color: Colors.green),
-                      Icon(Icons.album, color: Colors.yellow),
-                      Icon(Icons.album, color: Colors.red),
-                      Icon(Icons.album, color: Colors.grey),
-                      Icon(Icons.album, color: Colors.pink),
-                      Icon(Icons.album, color: Colors.purple),
-                      Icon(Icons.album, color: Colors.lightBlue),
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.blue,
+                        ),
+                        child: Radio(
+                          onChanged: (e) {
+                            setState(() {
+                              groupValue = e;
+                              color = Colors.blue;
+                            });
+                          },
+                          activeColor: Colors.blue,
+                          value: 1,
+                          groupValue: groupValue,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.green,
+                        ),
+                        child: Radio(
+                          onChanged: (e) {
+                            setState(() {
+                              groupValue = e;
+                              color = Colors.green;
+                            });
+                          },
+                          activeColor: Colors.green,
+                          value: 2,
+                          groupValue: groupValue,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.orange,
+                        ),
+                        child: Radio(
+                          onChanged: (e) {
+                            setState(() {
+                              groupValue = e;
+                              color = Colors.orange;
+                            });
+                          },
+                          activeColor: Colors.orange,
+                          value: 3,
+                          groupValue: groupValue,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                        child: Radio(
+                          onChanged: (e) {
+                            setState(() {
+                              groupValue = e;
+                              color = Colors.red;
+                            });
+                          },
+                          activeColor: Colors.red,
+                          value: 4,
+                          groupValue: groupValue,
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -112,6 +175,7 @@ class _AddTaskState extends State<AddTask> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
+        
         onPressed: () {
           days['M'] = daysSelected[0];
           days['T'] = daysSelected[1];
@@ -123,7 +187,7 @@ class _AddTaskState extends State<AddTask> {
 
           Navigator.pop(context, {
             'taskName': taskName,
-            'color': Colors.blue,
+            'color': color,
             'days': days,
           });
         },

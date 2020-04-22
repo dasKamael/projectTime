@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:projecttime/classes/task.dart';
 import 'package:projecttime/widgets/taskCard.dart';
 
@@ -8,44 +9,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<TaskCard> tasks = [
-    TaskCard(taskName: 'taskname', color: Colors.blue, time: 100, days: {
-      'M': false,
-      'T': true,
-      'W': false,
-      'T': true,
-      'F': false,
-      'S': false,
-      'S': false,
-    }),
-    TaskCard(taskName: 'Bob', color: Colors.red, time: 100, days: {
-      'M': true,
-      'T': true,
-      'W': false,
-      'T': true,
-      'F': true,
-      'S': false,
-      'S': false,
-    }),
-    TaskCard(taskName: 'taskname', color: Colors.orange, time: 100, days: {
-      'M': false,
-      'T': true,
-      'W': false,
-      'T': true,
-      'F': false,
-      'S': false,
-      'S': false,
-    }),
-    TaskCard(taskName: 'taskname', color: Colors.yellow, time: 100, days: {
-      'M': false,
-      'T': true,
-      'W': false,
-      'T': true,
-      'F': false,
-      'S': false,
-      'S': false,
-    }),
-  ];
+  List<TaskCard> tasks = [];
 
   Map taskData = {};
 
